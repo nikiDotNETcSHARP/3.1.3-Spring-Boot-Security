@@ -1,8 +1,8 @@
 package ru.kata.spring.boot_security.demo.entities;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -24,8 +24,8 @@ public class User {
     private String password;
 
     @ManyToMany
-    @JoinTable(name = "users_roles",
+    @JoinTable(name = "user_role_id",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<Role> all_roles;
 }
