@@ -1,7 +1,7 @@
 package ru.kata.spring.boot_security.demo.entities;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -9,7 +9,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long id;
+    private int id;
 
     @Column(name = "username")
     private String username;
@@ -20,21 +20,22 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role_id",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> all_roles;
+    private List<Role> all_roles;
 
     public User() {}
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, List<Role> all_roles) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.all_roles = all_roles;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
@@ -50,11 +51,11 @@ public class User {
         return password;
     }
 
-    public Collection<Role> getAll_roles() {
+    public List<Role> getAll_roles() {
         return all_roles;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -70,7 +71,7 @@ public class User {
         this.password = password;
     }
 
-    public void setAll_roles(Collection<Role> all_roles) {
+    public void setAll_roles(List<Role> all_roles) {
         this.all_roles = all_roles;
     }
 }
